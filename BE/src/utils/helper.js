@@ -1,27 +1,20 @@
-const { unlinkSync } = require('fs');
+import jwt from "jsonwebtoken"
 
-
-const randomStringGenerator = (length) => {
-    let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let random = "";
-    for (let i = 0; i < length; i++) {
-        random += chars.charAt(Math.floor(Math.random() * length));
-    }
-    return random;
+export const generateVerificationCode = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
+export const generateTokenAndSetCookie = (res, userId) => {
+	const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
+		expiresIn: "7d",
+	});
 
+	res.cookie("token", token, {
+		httpOnly: true,
+		secure: process.env.NODE_ENV === "production",
+		sameSite: "strict",
+		maxAge: 7 * 24 * 60 * 60 * 1000,
+	});
 
-const deleteFile = async (path) => {
-    try {
-        unlinkSync(path);
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
-
-module.exports = {
-    randomStringGenerator,
-    deleteFile
+	return token;
 };

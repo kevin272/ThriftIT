@@ -1,14 +1,24 @@
-require('dotenv').config();
-const http = require('http');
-const app = require('./src/config/express.config');
-const server = http.createServer(app);
+import express from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
-const port = process.env.PORT || 9005;
-server.listen(port, (error) => {
-    if (error) {
-        console.log('Error starting server');
-    } else {
-        console.log('Server started on http://localhost:'+port);
-        console.log('Press Ctrl+C to stop');
-    }
-});
+import { connectDB } from "./src/config/db.config.js";
+import authRoutes from "./src/routes/auth.route.js";
+dotenv.config();
+
+const PORT = process.env.PORT || 5000;
+
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
+
+app.get("/",(req,res) => {
+    res.send("Hello World!");
+})
+
+app.use("/api/auth", authRoutes)
+
+app.listen(PORT, () => {
+    connectDB();
+    console.log("Server Running on http://localhost:"+ PORT)
+})
