@@ -2,7 +2,8 @@ import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import { useAuthStore } from "../store/authStore.js";
 import { formatDate } from "../utils/date.js";
-import video from "../assets/bg.mp4"
+import video from "../assets/bg.mp4";
+import { HackedText } from "../components/GlitchText.jsx";
 
 const containerVariants = {
   hidden: { opacity: 0, scale: 0.95 },
@@ -31,7 +32,7 @@ const cardVariants = {
 };
 
 const buttonVariants = {
-  hover: { scale: 1.05, boxShadow: "0px 0px 8px rgba(34, 197, 94, 0.7)" },
+  hover: { scale: 1.05, boxShadow: "0px 0px 8px rgba(255, 255, 255, 0.7)" },
   tap: { scale: 0.95 },
 };
 
@@ -50,14 +51,14 @@ const HomePage = () => {
   return (
     <AnimatePresence>
       <motion.div
-        className="bg-gradient-to-br from-gray-900 via-green-950 to-emerald-900 text-white relative overflow-x-hidden"
+        className="bg-gradient-to-br from-black via-zinc-900 to-gray-900 text-white relative overflow-x-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.6 }}
       >
         {/* Hero Section */}
-        <section className="h-svh w-screen relative flex flex-col items-center justify-center text-center px-4">
+        <section className="hero h-svh w-screen relative flex flex-col items-center justify-center text-center px-4">
           <video
             autoPlay
             muted
@@ -69,12 +70,12 @@ const HomePage = () => {
           </video>
 
           <motion.h1
-            className="text-5xl md:text-6xl font-extrabold mb-8 bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text z-10"
+            className="text-5xl md:text-6xl font-extrabold mb-8 bg-gradient-to-r from-white to-gray-300 text-transparent bg-clip-text z-10"
             initial={{ y: -40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            Welcome, {user.name} 🌟
+            <HackedText text={`Welcome, ${user.name}🌟`} />
           </motion.h1>
 
           <motion.p
@@ -88,15 +89,15 @@ const HomePage = () => {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 px-4 flex flex-col items-center justify-center bg-gray-950 bg-opacity-60 backdrop-blur-md">
+        <section className="py-20 px-4 flex flex-col items-center justify-center bg-zinc-950 bg-opacity-60 backdrop-blur-md">
           <motion.h2
-            className="text-4xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 text-transparent bg-clip-text mb-12"
+            className="text-4xl font-bold bg-gradient-to-r from-white to-gray-300 text-transparent bg-clip-text mb-12"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            Your Activity Overview
+            <HackedText text={`Activity`} />
           </motion.h2>
 
           <motion.div
@@ -111,7 +112,7 @@ const HomePage = () => {
                 variants={cardVariants}
                 className="p-4 bg-gray-800 bg-opacity-50 rounded-lg border border-gray-700"
               >
-                <h3 className="text-xl font-semibold text-green-400 mb-3">Profile Information</h3>
+                <h3 className="text-xl font-semibold text-white mb-3">Profile Information</h3>
                 <p className="text-gray-300">Name: {user.name}</p>
                 <p className="text-gray-300">Email: {user.email}</p>
               </motion.div>
@@ -120,7 +121,7 @@ const HomePage = () => {
                 variants={cardVariants}
                 className="p-4 bg-gray-800 bg-opacity-50 rounded-lg border border-gray-700"
               >
-                <h3 className="text-xl font-semibold text-green-400 mb-3">Account Activity</h3>
+                <h3 className="text-xl font-semibold text-white mb-3">Account Activity</h3>
                 <p className="text-gray-300">
                   <span className="font-bold">Joined: </span>
                   {new Date(user.createdAt).toLocaleDateString("en-US", {
@@ -142,7 +143,7 @@ const HomePage = () => {
                 whileHover="hover"
                 whileTap="tap"
                 onClick={handleLogout}
-                className="w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                className="w-full py-3 px-4 bg-white text-black font-bold rounded-lg shadow-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black transition"
               >
                 Logout
               </motion.button>
@@ -153,7 +154,7 @@ const HomePage = () => {
         {/* Footer/CTA Section */}
         <section className="py-20 px-6 text-center bg-gray-900 bg-opacity-80">
           <motion.h2
-            className="text-4xl font-bold bg-gradient-to-r from-emerald-300 to-green-400 text-transparent bg-clip-text mb-6"
+            className="text-4xl font-bold bg-gradient-to-r from-white to-gray-300 text-transparent bg-clip-text mb-6"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
@@ -173,7 +174,7 @@ const HomePage = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-10 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-full shadow-xl hover:from-green-600 hover:to-emerald-700"
+            className="px-10 py-4 bg-white text-black font-bold rounded-full shadow-xl hover:bg-gray-200"
           >
             Explore More
           </motion.button>

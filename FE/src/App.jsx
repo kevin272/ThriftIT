@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, Children } from 'react';
+import {  useEffect } from 'react';
 import FloatingShape from './components/FloatingShape';
 import { HackedText } from './components/GlitchText';
 import LoginPage from "./pages/LoginPage";
@@ -11,6 +11,8 @@ import HomePage from './pages/HomePage';
 import LoadingSpinner from './components/LoadingSpinner';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import LetterGlitch from './components/LetterGlitch';
+import GridDistortion from './components/HeroSection';
 
 
 const ProtectedRoutes = ({ children }) => {
@@ -46,14 +48,22 @@ function App() {
   if (isCheckingAuth) { return <LoadingSpinner /> }
   return (
     <>
-      <div className='min-h-screen bg-gradient-to-br
-    from-gray-900 via-green-900 to-emerald-900 flex items-center justify-center relative overflow-hidden'
-      >
+    <div className="fixed inset-0 z-0">
+<GridDistortion
+    imageSrc="https://picsum.photos/1920/1080?grayscale"
+    grid={10}
+    mouse={0.1}
+    strength={0.15}
+    relaxation={0.9}
+    className="custom-class"
+  />     </div>
+      {/* Optional floating shapes in grayscale for subtle effect, also fixed */}
+      <FloatingShape color="bg-white" size="w-64 h-64" top="-5%" left="10%" delay={0} />
+      <FloatingShape color="bg-white" size="w-48 h-48" top="70%" left="80%" delay={5} />
+      <FloatingShape color="bg-white" size="w-32 h-32" top="40%" left="-10%" delay={2} />
 
-        <FloatingShape color='bg-green-500' size='w-64 h-64' top='-5%' left='10%' delay={0} />
-        <FloatingShape color='bg-emerald-500' size='w-48 h-48' top='70%' left='80%' delay={5} />
-        <FloatingShape color='bg-lime-500' size='w-32 h-32' top='40%' left='-10%' delay={2} />
-        {/* <HackedText text="THRIFTIT" /> */}
+      <div className="min-h-screen bg-black bg-opacity-50 text-white flex items-center justify-center relative z-10 overflow-hidden">        {/* Optional floating shapes in grayscale for subtle effect */}
+       
         <Toaster />
         <Routes>
 
